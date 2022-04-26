@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "121566854251",
+    "project_id": "ocr-aoe-ii",
+    "storage_bucket": "ocr-aoe-ii.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121566854251:android:71c36f7a3c6c1464e1c52e",
+        "android_client_info": {
+          "package_name": "br.eti.albertino.albe_ocr_aoe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121566854251-i5kmr0v1dr0nju8khibmc21g04e8g24l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbdIOqzw-nrJIIa8drg4-VhI2r1QvuhUo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121566854251-i5kmr0v1dr0nju8khibmc21g04e8g24l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
