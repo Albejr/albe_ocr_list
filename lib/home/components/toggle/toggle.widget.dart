@@ -1,4 +1,4 @@
-import 'package:albe_ocr_aoe/home/components/toggle/toggle.controller.dart';
+import 'package:albe_ocr_list/home/components/toggle/toggle.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

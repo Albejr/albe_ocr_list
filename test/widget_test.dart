@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:albe_ocr_aoe/home/home_app.widget.dart';
+import 'package:albe_ocr_list/home/home_app.widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 void main() {

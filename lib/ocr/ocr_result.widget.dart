@@ -1,4 +1,4 @@
-import 'package:albe_ocr_aoe/shared/models/player_model.dart';
+import 'package:albe_ocr_list/shared/models/player_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:package_info_plus/package_info_plus.dart';

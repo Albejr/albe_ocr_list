@@ -1,4 +1,4 @@
-import 'package:albe_ocr_aoe/shared/models/result_item_model.dart';
+import 'package:albe_ocr_list/shared/models/result_item_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 

@@ -1,4 +1,4 @@
-import 'package:albe_ocr_aoe/shared/database/firebase.dart';
+import 'package:albe_ocr_list/shared/database/firebase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
