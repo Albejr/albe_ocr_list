@@ -47,10 +47,10 @@ class TextDetectorPainter extends CustomPainter {
           builder.addText(textLine.text);
           builder.pop();
 
-          final left =
-              translateX(textLine.boundingBox.left, rotation, size, absoluteImageSize);
-          final top =
-              translateY(textLine.boundingBox.top, rotation, size, absoluteImageSize);
+          final left = translateX(
+              textLine.boundingBox.left, rotation, size, absoluteImageSize);
+          final top = translateY(
+              textLine.boundingBox.top, rotation, size, absoluteImageSize);
           final right = translateX(
               textLine.boundingBox.right, rotation, size, absoluteImageSize);
           final bottom = translateY(
@@ -81,13 +81,13 @@ class TextDetectorPainter extends CustomPainter {
   PlayerModel getPlayerModelByText(String textVal) {
     if (blackList.any((element) => isMatchCustom(element, textVal))) {
       return PlayerModel(
-          '', textVal, constants_firebase.blackList, true, Colors.red);
+          '', textVal, constants_firebase.blackList, true, Colors.red, null);
     } else if (whiteList.any((element) => isMatchCustom(element, textVal))) {
       return PlayerModel(
-          '', textVal, constants_firebase.whiteList, true, Colors.green);
+          '', textVal, constants_firebase.whiteList, true, Colors.green, null);
     } else {
       return PlayerModel('', textVal, constants_firebase.undefinedList, false,
-          Colors.transparent);
+          Colors.transparent, null);
     }
   }
 

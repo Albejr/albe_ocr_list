@@ -32,6 +32,7 @@ class Database {
             doc.get(constants_firebase.playerName).toString().trim(),
             coolectionPath,
             false,
+            null,
             null))
         .where((element) => element.name.trim().isNotEmpty)
         .toList();
@@ -53,7 +54,8 @@ class Database {
     return result.size > 0;
   }
 
-  static Future<String> addItem(String coolectionPath, String value) async {
+  static Future<String> addItem(
+      String coolectionPath, String value, List<String>? chips) async {
     return await checkNameAlreadyExist(coolectionPath, value).then(
         (isAlreadyExist) => (isAlreadyExist)
             ? Future.error('Item já exite nesta lista.')
@@ -66,6 +68,7 @@ class Database {
                         .collection(coolectionPath)
                         .add({
                           constants_firebase.playerName: value,
+                          'Chips': chips,
                           'OriginalSource': coolectionPath,
                           'Platform ': defaultTargetPlatform.name,
                           'CreatedDate': DateTime.now()

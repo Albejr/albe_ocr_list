@@ -39,11 +39,11 @@ class ResultItemModel {
   static String getTitleOfTheList(String listType) {
     switch (listType) {
       case constants_firebase.blackList:
-        return 'Avançados';
+        return 'Avançado';
       case constants_firebase.whiteList:
-        return 'Iniciantes';
+        return 'Normal';
       default:
-        return 'Indefinidos';
+        return 'Indefinido';
     }
   }
 

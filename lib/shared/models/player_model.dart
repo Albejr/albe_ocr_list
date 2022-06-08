@@ -6,6 +6,7 @@ class PlayerModel {
   final String listType;
   final bool isMatchText;
   final Color? color;
+  final List<String>? chips;
 
-  PlayerModel(this.id, this.name, this.listType, this.isMatchText, this.color);
+  PlayerModel(this.id, this.name, this.listType, this.isMatchText, this.color, this.chips);
 }
