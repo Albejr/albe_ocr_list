@@ -48,13 +48,13 @@ class TextDetectorPainter extends CustomPainter {
           builder.pop();
 
           final left =
-              translateX(textLine.rect.left, rotation, size, absoluteImageSize);
+              translateX(textLine.boundingBox.left, rotation, size, absoluteImageSize);
           final top =
-              translateY(textLine.rect.top, rotation, size, absoluteImageSize);
+              translateY(textLine.boundingBox.top, rotation, size, absoluteImageSize);
           final right = translateX(
-              textLine.rect.right, rotation, size, absoluteImageSize);
+              textLine.boundingBox.right, rotation, size, absoluteImageSize);
           final bottom = translateY(
-              textLine.rect.bottom, rotation, size, absoluteImageSize);
+              textLine.boundingBox.bottom, rotation, size, absoluteImageSize);
 
           canvas.drawRect(
             Rect.fromLTRB(left, top, right, bottom),

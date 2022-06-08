@@ -24,7 +24,7 @@ class _HomeSplashScreenState extends State<HomeSplashScreen> {
   @override
   Widget build(BuildContext context) {
     return SplashScreen(
-        seconds: 3,
+        seconds: 1,
         navigateAfterSeconds: HomePageWidget(
           title: widget.packageInfo.appName,
         ),
