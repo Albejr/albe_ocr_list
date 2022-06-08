@@ -32,7 +32,7 @@ class _ResultPageWidgetState extends State<ResultPageWidget>
                 return Text(
                   (snapshot.data?.docs.length.toString() ?? '-'),
                   style: const TextStyle(
-                      fontWeight: FontWeight.w100, fontSize: 12),
+                      fontWeight: FontWeight.w200, fontSize: 12),
                 );
               }))
     ])),
@@ -49,7 +49,7 @@ class _ResultPageWidgetState extends State<ResultPageWidget>
                 return Text(
                   (snapshot.data?.docs.length.toString() ?? '-'),
                   style: const TextStyle(
-                      fontWeight: FontWeight.w100, fontSize: 12),
+                      fontWeight: FontWeight.w200, fontSize: 12),
                 );
               }))
     ])),
@@ -74,29 +74,50 @@ class _ResultPageWidgetState extends State<ResultPageWidget>
         length: 2,
         child: Scaffold(
             appBar: AppBar(
-              flexibleSpace: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TabBar(
-                    controller: _tabController,
-                    indicatorColor: Colors.amber,
-                    indicatorWeight: 3,
-                    tabs: listTabs,
-                    onTap: (index) {
-                      controller.setSelectedTabIndex(index);
-                      toggleController.setSelectedIndex(index);
-                    },
-                  )
-                ],
-              ),
+              flexibleSpace: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color.fromRGBO(243, 150, 154, 1),
+                        Color.fromRGBO(120, 194, 173, 1),
+                      ],
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TabBar(
+                        controller: _tabController,
+                        indicatorColor: Colors.amber,
+                        indicatorWeight: 3,
+                        labelColor: Colors.black,
+                        tabs: listTabs,
+                        onTap: (index) {
+                          controller.setSelectedTabIndex(index);
+                          toggleController.setSelectedIndex(index);
+                        },
+                      )
+                    ],
+                  )),
             ),
-            body: TabBarView(
-                controller: _tabController,
-                physics: const NeverScrollableScrollPhysics(),
-                children: const [
-                  ResultListWidget(constants_firebase.blackList),
-                  ResultListWidget(constants_firebase.whiteList)
-                ])));
+            body: Container(
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromRGBO(243, 150, 154, 1),
+                    Color.fromRGBO(120, 194, 173, 1),
+                  ],
+                ),
+              ),
+              child: TabBarView(
+                  controller: _tabController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: const [
+                    ResultListWidget(constants_firebase.blackList),
+                    ResultListWidget(constants_firebase.whiteList)
+                  ]),
+            )));
   }
 
   @override

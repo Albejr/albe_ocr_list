@@ -32,10 +32,18 @@ class _HomeSplashScreenState extends State<HomeSplashScreen> {
           ('${widget.packageInfo.appName}\n${widget.packageInfo.version}'),
           textAlign: TextAlign.center,
           style: const TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
+              fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black87),
         ),
-        imageBackground: const AssetImage('assets/images/background.jpg'),
-        loaderColor: Colors.deepOrange);
+        //imageBackground: const AssetImage('assets/images/background.jpg'),
+        gradientBackground: const LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            Color.fromRGBO(243, 150, 154, 1),
+            Color.fromRGBO(120, 194, 173, 1),
+          ],
+        ),
+        loaderColor: Colors.white);
   }
 
   @override

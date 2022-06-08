@@ -1,4 +1,4 @@
-# Albe OCR Players <sup>2.0.1</sup>
+# Albe OCR Players <sup>2.0.2</sup>
 OCR to identify players in specific lists.
 
 ## Installation

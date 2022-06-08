@@ -23,7 +23,9 @@ class PlayerAddFormWidget extends StatefulWidget {
 class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
   final _formKey = GlobalKey<FormState>();
   final _name = TextEditingController();
+
   late ResultPageController resultPageController;
+  late List<ChipsModel> initialChipsList = getChipsByListType(playerModel.listType);
 
   PlayerModel playerModel =
       PlayerModel('', '', constants_firebase.undefinedList, false, null, null);
@@ -66,9 +68,6 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
   }
 
   List<Widget> buildChips() {
-    List<ChipsModel> initialChipsList =
-        getChipsByListType(playerModel.listType);
-
     List<Widget> chips = [];
     for (int i = 0; i < initialChipsList.length; i++) {
       Widget item = Padding(
@@ -80,17 +79,17 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
           disabledColor: Colors.grey,
           selectedColor: Colors.amber,
           selected: initialChipsList[i].isSelected,
-          // onSelected: (bool value) {
-          //   // setState(() {
-          //   //   initialChipsList[i].isSelected = value;
-          //   // });
-          // },
-          onPressed: () {
-            // setState(() {
-            //   var isSelected = initialChipsList[i].isSelected;
-            //   initialChipsList[i].isSelected = !isSelected;
-            // });
+          onSelected: (bool value) {
+            setState(() {
+              initialChipsList[i].isSelected = value;
+            });
           },
+          // onPressed: () {
+          // setState(() {
+          //   var isSelected = initialChipsList[i].isSelected;
+          //   initialChipsList[i].isSelected = !isSelected;
+          // });
+          // },
         ),
       );
       chips.add(item);
@@ -148,8 +147,16 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
                         : null;
                   },
                   onSaved: (newValue) => {
-                        playerModel = PlayerModel('', (newValue?.trim() ?? ''),
-                            playerModel.listType, false, null, null)
+                        playerModel = PlayerModel(
+                            '',
+                            (newValue?.trim() ?? ''),
+                            playerModel.listType,
+                            false,
+                            null,
+                            initialChipsList
+                                .where((w) => w.isSelected)
+                                .map((m) => m.label)
+                                .toList())
                       })),
           Padding(
               padding: const EdgeInsets.all(8),

@@ -24,11 +24,13 @@ class HomeAppWidget extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(
           brightness: Brightness.light,
-          primarySwatch: Colors.amber,
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: Colors.white70
         ),
         darkTheme: ThemeData(
           brightness: Brightness.dark,
           primarySwatch: Colors.amber,
+          scaffoldBackgroundColor: Colors.black87
         ),
         themeMode: ThemeMode.dark,
         initialRoute: '/',

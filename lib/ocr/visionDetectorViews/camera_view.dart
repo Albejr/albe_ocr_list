@@ -73,7 +73,18 @@ class _CameraViewState extends State<CameraView> {
           ),
         ],
       ),
-      body: defineBody(),
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromRGBO(243, 150, 154, 1),
+              Color.fromRGBO(120, 194, 173, 1),
+            ],
+          ),
+        ),
+        child: defineBody(),
+      ),
       // floatingActionButton: _floatingActionButton(),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -148,13 +159,13 @@ class _CameraViewState extends State<CameraView> {
       );
     } else {
       return Container(
-          margin: const EdgeInsets.all(9.0),
+          margin: const EdgeInsets.all(9),
           width: MediaQuery.of(context).size.width,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 20),
+                minimumSize: const Size.fromHeight(50),
               ),
               child: const Text('Permitir acesso à câmera'),
               onPressed: () =>
@@ -169,29 +180,28 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget _galleryBody() {
-    return ListView(shrinkWrap: true, children: [
-      (_image != null)
-          ? SizedBox(
-              height: 400,
-              width: 400,
-              child: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  Image.file(_image!),
-                  if (widget.customPaint != null) widget.customPaint!,
-                ],
-              ),
-            )
-          : const Icon(
-              Icons.image_sharp,
-              size: 400,
-              color: Colors.grey,
-            ),
+    return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        child: (_image != null)
+            ? SizedBox(
+                height: 400,
+                width: 400,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    Image.file(_image!),
+                    if (widget.customPaint != null) widget.customPaint!,
+                  ],
+                ),
+              )
+            : const Icon(Icons.image_sharp, size: 400, color: Colors.black54),
+      ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            minimumSize: const Size.fromHeight(50),
           ),
           child: const Text('Carregar da galeria'),
           onPressed: () => _getImage(ImageSource.gallery),
@@ -202,7 +212,7 @@ class _CameraViewState extends State<CameraView> {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             //primary: Colors.pink,
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            minimumSize: const Size.fromHeight(50),
           ),
           child: const Text('Tirar uma foto'),
           onPressed: () =>
@@ -219,7 +229,7 @@ class _CameraViewState extends State<CameraView> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.pink,
-                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  minimumSize: const Size.fromHeight(50),
                 ),
                 child: const Text('Reprocessar imagem'),
                 onPressed: () => _processPickedFile(_pickedFile!),

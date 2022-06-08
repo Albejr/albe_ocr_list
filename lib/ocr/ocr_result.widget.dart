@@ -74,7 +74,7 @@ class OcrResultWidget extends StatelessWidget {
     ResultItemModel u = ResultItemModel(
         listTypeAlias:
             ResultItemModel.getTitleOfTheList(constants_firebase.undefinedList),
-        color: const Color.fromRGBO(5, 137, 245, 0.7),
+        color: Colors.blueGrey,
         icon: const Icon(Icons.touch_app, color: Colors.white),
         showIcon: true,
         players: undefinedListType
@@ -97,8 +97,7 @@ class OcrResultWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 child: Text(
                   item.listTypeAlias,
-                  style:
-                      TextStyle(fontSize: 20, color: item.color.withOpacity(1)),
+                  style: const TextStyle(fontSize: 20, color: Colors.black87),
                 ),
               ),
               Card(
@@ -113,10 +112,8 @@ class OcrResultWidget extends StatelessWidget {
                                 tileColor: item.color,
                                 dense: true,
                                 trailing: item.showIcon
-                                    ? Icon(
-                                        item.icon.icon,
-                                        color: Colors.black.withOpacity(0.3),
-                                      )
+                                    ? Icon(item.icon.icon,
+                                        color: Colors.black38)
                                     : const SizedBox.shrink(),
                                 title: Text(player.name,
                                     style: const TextStyle(
@@ -145,7 +142,7 @@ class OcrResultWidget extends StatelessWidget {
                                 }))
                             .toList())
                     : const ListTile(
-                        //tileColor: item.color,
+                        tileColor: Colors.black54,
                         dense: true,
                         title: Center(
                             child: Text('Nenhum item identificado.',
@@ -174,7 +171,7 @@ class OcrResultWidget extends StatelessWidget {
                   width: 50,
                   height: 50,
                   child: CircularProgressIndicator(
-                    color: Colors.deepOrange,
+                    color: Colors.white,
                   ))
             ]);
           }
@@ -188,11 +185,20 @@ class OcrResultWidget extends StatelessWidget {
           title: Text(packageInfo.appName),
         ),
         body: Container(
-            margin: const EdgeInsets.all(9.0),
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(243, 150, 154, 1),
+                  Color.fromRGBO(120, 194, 173, 1),
+                ],
+              ),
+            ),
             width: MediaQuery.of(context).size.width,
+            height: double.infinity,
             child: ListView(
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
+              padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 9),
               children: <Widget>[builderFutureWidget()],
             )));
   }

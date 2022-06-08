@@ -34,7 +34,7 @@ class _ResultListWidgetState extends State<ResultListWidget> {
                             width: 50,
                             height: 50,
                             child: CircularProgressIndicator(
-                              color: Colors.deepOrange,
+                              color: Colors.white,
                             ))
                       ]
                     : builderListCard(resultItemModel));
@@ -46,7 +46,7 @@ class _ResultListWidgetState extends State<ResultListWidget> {
                   width: 50,
                   height: 50,
                   child: CircularProgressIndicator(
-                    color: Colors.deepOrange,
+                    color: Colors.white,
                   ))
             ]);
           }
@@ -64,10 +64,9 @@ class _ResultListWidgetState extends State<ResultListWidget> {
                   dense: true,
                   leading: Text(
                       (resultItemModel.players.indexOf(item) + 1).toString(),
-                      style: TextStyle(
-                          color: Colors.black.withOpacity(0.5), fontSize: 10)),
-                  trailing: Icon(Icons.touch_app,
-                      color: Colors.black.withOpacity(0.3)),
+                      style:
+                          const TextStyle(color: Colors.black54, fontSize: 10)),
+                  trailing: const Icon(Icons.touch_app, color: Colors.black38),
                   title: Text(item.name,
                       style: const TextStyle(
                           color: Colors.white,
@@ -181,12 +180,12 @@ class _ResultListWidgetState extends State<ResultListWidget> {
   @override
   Widget build(BuildContext context) {
     resultPageController = context.watch<ResultPageController>();
-    return Container(
-        margin: const EdgeInsets.all(9.0),
+    return SizedBox(
         width: MediaQuery.of(context).size.width,
         child: ListView(
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
+          padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 9),
           children: <Widget>[
             if (widget.listType == constants_firebase.blackList)
               builderFutureWidget(ResultItemModel.getNamesBlackList())
