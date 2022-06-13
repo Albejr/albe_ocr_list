@@ -33,7 +33,8 @@ class Database {
             coolectionPath,
             false,
             null,
-            null))
+            null,
+            doc.get('CreatedDate')))
         .where((element) => element.name.trim().isNotEmpty)
         .toList();
 

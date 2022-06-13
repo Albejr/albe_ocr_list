@@ -5,11 +5,11 @@ import '/shared/database/firebase.dart';
 import '/shared/constants/firebase_names.dart' as constants_firebase;
 
 class ResultItemModel {
-  final List<PlayerModel> players;
-  final Icon icon;
-  final bool showIcon;
-  final Color color;
-  final String listTypeAlias;
+  List<PlayerModel> players;
+  Icon icon;
+  bool showIcon;
+  Color color;
+  String listTypeAlias;
 
   ResultItemModel(
       {required this.players,
@@ -18,22 +18,58 @@ class ResultItemModel {
       required this.color,
       required this.listTypeAlias});
 
-  static Future<ResultItemModel> getNamesBlackList() async {
+  static Future<ResultItemModel> getNames(String collectionPath) async {
+    Color color;
+    Icon icon;
+
+    switch (collectionPath) {
+      case constants_firebase.blackList:
+        color = const Color.fromRGBO(243, 150, 154, 0.7);
+        icon = const Icon(Icons.block_flipped, color: Colors.white);
+        break;
+      case constants_firebase.whiteList:
+        color = const Color.fromRGBO(120, 194, 173, 0.7);
+        icon = const Icon(Icons.task_alt, color: Colors.white);
+        break;
+      default:
+        color = Colors.blueGrey;
+        icon = const Icon(Icons.question_mark, color: Colors.white);
+        break;
+    }
+
     return ResultItemModel(
-        listTypeAlias: getTitleOfTheList(constants_firebase.blackList),
-        color: const Color.fromRGBO(243, 150, 154, 0.7),
-        icon: const Icon(Icons.block_flipped, color: Colors.white),
+        listTypeAlias: getTitleOfTheList(collectionPath),
+        color: color,
         showIcon: true,
-        players: await Database.getItems(constants_firebase.blackList));
+        icon: icon,
+        players: await Database.getItems(collectionPath));
   }
 
-  static Future<ResultItemModel> getNamesWhiteList() async {
+  static ResultItemModel getTile(String collectionPath) {
+    Color color;
+    Icon icon;
+
+    switch (collectionPath) {
+      case constants_firebase.blackList:
+        color = const Color.fromRGBO(243, 150, 154, 0.7);
+        icon = const Icon(Icons.block_flipped, color: Colors.white);
+        break;
+      case constants_firebase.whiteList:
+        color = const Color.fromRGBO(120, 194, 173, 0.7);
+        icon = const Icon(Icons.task_alt, color: Colors.white);
+        break;
+      default:
+        color = Colors.blueGrey;
+        icon = const Icon(Icons.question_mark, color: Colors.white);
+        break;
+    }
+
     return ResultItemModel(
-        listTypeAlias: getTitleOfTheList(constants_firebase.whiteList),
-        color: const Color.fromRGBO(120, 194, 173, 0.7),
+        listTypeAlias: getTitleOfTheList(collectionPath),
+        color: color,
         showIcon: true,
-        icon: const Icon(Icons.task_alt, color: Colors.white),
-        players: await Database.getItems(constants_firebase.whiteList));
+        icon: icon,
+        players: []);
   }
 
   static String getTitleOfTheList(String listType) {

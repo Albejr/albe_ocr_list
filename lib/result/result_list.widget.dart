@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:provider/provider.dart';
 
 import '/player/player_edit_form.widget.dart';
@@ -19,103 +23,6 @@ class ResultListWidget extends StatefulWidget {
 
 class _ResultListWidgetState extends State<ResultListWidget> {
   late ResultPageController resultPageController;
-
-  FutureBuilder<ResultItemModel> builderFutureWidget(
-      Future<ResultItemModel> futureResultItemModel) {
-    return FutureBuilder(
-        future: futureResultItemModel,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            ResultItemModel resultItemModel = snapshot.data as ResultItemModel;
-            return Column(
-                children: resultPageController.isProcessing
-                    ? const [
-                        SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ))
-                      ]
-                    : builderListCard(resultItemModel));
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error.toString()}');
-          } else {
-            return Column(children: const [
-              SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ))
-            ]);
-          }
-        });
-  }
-
-  List<Widget> builderListCard(ResultItemModel resultItemModel) {
-    return resultItemModel.players
-        .map<Widget>((item) => Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.zero),
-              ),
-              color: resultItemModel.color,
-              child: ListTile(
-                  dense: true,
-                  leading: Text(
-                      (resultItemModel.players.indexOf(item) + 1).toString(),
-                      style:
-                          const TextStyle(color: Colors.black54, fontSize: 10)),
-                  trailing: const Icon(Icons.touch_app, color: Colors.black38),
-                  title: Text(item.name,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w300)),
-                  onTap: () {
-                    showModalBottomSheet<void>(
-                        context: context,
-                        builder: (BuildContext contextModal) {
-                          return Wrap(children: <Widget>[
-                            Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Center(
-                                  child: Text(item.name),
-                                )),
-                            Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 8),
-                                child: ListTile(
-                                    leading: const Icon(Icons.edit_note),
-                                    tileColor: Colors.blueAccent,
-                                    title: const Text('Editar'),
-                                    onTap: () =>
-                                        _editItem(contextModal, item))),
-                            Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 8),
-                                child: ListTile(
-                                    leading: const Icon(
-                                        Icons.drive_file_move_outlined),
-                                    tileColor: Colors.amber,
-                                    title: const Text('Transferir de lista'),
-                                    onTap: () =>
-                                        _moveItem(contextModal, item))),
-                            Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 8),
-                                child: ListTile(
-                                    leading: const Icon(Icons.delete),
-                                    tileColor: Colors.pink,
-                                    title: const Text('Remover'),
-                                    onTap: () =>
-                                        _deleteItem(contextModal, item))),
-                          ]);
-                        });
-                  }),
-            ))
-        .toList();
-  }
 
   Future<void> _moveItem(
     BuildContext context,
@@ -178,23 +85,121 @@ class _ResultListWidgetState extends State<ResultListWidget> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     resultPageController = context.watch<ResultPageController>();
-    return SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: ListView(
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 9),
-          children: <Widget>[
-            if (widget.listType == constants_firebase.blackList)
-              builderFutureWidget(ResultItemModel.getNamesBlackList())
-            else if (widget.listType == constants_firebase.whiteList)
-              builderFutureWidget(ResultItemModel.getNamesWhiteList())
-            else
-              Container()
-          ],
-        ));
+    return resultPageController.isProcessing
+        ? Column(children: const [
+            Padding(
+              padding: EdgeInsets.all(15),
+              child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  )),
+            )
+          ])
+        : Scrollbar(
+            child: PaginateFirestore(
+              itemBuilderType: PaginateBuilderType.listView,
+              itemBuilder: (context, documentSnapshots, index) {
+                final data = documentSnapshots[index].data() as Map?;
+
+                PlayerModel playerModel = PlayerModel(
+                    documentSnapshots[index].id,
+                    data![constants_firebase.playerName],
+                    widget.listType,
+                    false,
+                    null,
+                    null,
+                    data['CreatedDate']);
+
+                ResultItemModel resultItemModel =
+                    ResultItemModel.getTile(widget.listType);
+
+                return Card(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.zero),
+                  ),
+                  color: resultItemModel.color,
+                  child: ListTile(
+                      dense: true,
+                      leading: Text((index + 1).toString(),
+                          style: const TextStyle(
+                              color: Colors.black54, fontSize: 10)),
+                      trailing:
+                          const Icon(Icons.touch_app, color: Colors.black38),
+                      title: Text(playerModel.name,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w300)),
+                      onTap: () {
+                        showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext contextModal) {
+                              return Wrap(children: <Widget>[
+                                Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Center(
+                                      child: Column(children: [
+                                        Text(playerModel.name,
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold)),
+                                        Text(documentSnapshots[index].id,
+                                            style: const TextStyle(
+                                                color: Colors.white38,
+                                                fontSize: 8)),
+                                      ]),
+                                    )),
+                                Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 8),
+                                    child: ListTile(
+                                        leading: const Icon(Icons.edit_note),
+                                        tileColor: Colors.blueAccent,
+                                        title: const Text('Editar'),
+                                        onTap: () => _editItem(
+                                            contextModal, playerModel))),
+                                Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 8),
+                                    child: ListTile(
+                                        leading: const Icon(
+                                            Icons.drive_file_move_outlined),
+                                        tileColor: Colors.amber,
+                                        title:
+                                            const Text('Transferir de lista'),
+                                        onTap: () => _moveItem(
+                                            contextModal, playerModel))),
+                                Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 8),
+                                    child: ListTile(
+                                        leading: const Icon(Icons.delete),
+                                        tileColor: Colors.pink,
+                                        title: const Text('Remover'),
+                                        onTap: () => _deleteItem(
+                                            contextModal, playerModel))),
+                              ]);
+                            });
+                      }),
+                );
+              },
+              query: FirebaseFirestore.instance
+                  .collection(widget.listType)
+                  .orderBy(constants_firebase.playerName),
+              itemsPerPage: 15,
+              isLive: true,
+            ),
+          );
   }
 
   @override

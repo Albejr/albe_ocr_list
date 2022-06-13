@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class PlayerModel {
@@ -7,6 +8,7 @@ class PlayerModel {
   final bool isMatchText;
   final Color? color;
   final List<String>? chips;
+  final Timestamp? createdDate;
 
-  PlayerModel(this.id, this.name, this.listType, this.isMatchText, this.color, this.chips);
+  PlayerModel(this.id, this.name, this.listType, this.isMatchText, this.color, this.chips, this.createdDate);
 }

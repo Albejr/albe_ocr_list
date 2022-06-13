@@ -33,27 +33,21 @@ class OcrResultWidget extends StatelessWidget {
   Future<List<ResultItemModel>> getFutureResultItemModelByDataBase() async {
     List<String> recognizedListResult = result();
 
-    ResultItemModel b = await ResultItemModel.getNamesBlackList();
-    b = ResultItemModel(
-        color: b.color,
-        icon: b.icon,
-        showIcon: false,
-        listTypeAlias: b.listTypeAlias,
-        players: b.players
-            .where((element) =>
-                recognizedListResult.contains(element.name.toLowerCase()))
-            .toList());
+    ResultItemModel b =
+        await ResultItemModel.getNames(constants_firebase.blackList);
+    b.showIcon = false;
+    b.players = b.players
+        .where((element) =>
+            recognizedListResult.contains(element.name.toLowerCase()))
+        .toList();
 
-    ResultItemModel w = await ResultItemModel.getNamesWhiteList();
-    w = ResultItemModel(
-        color: w.color,
-        icon: w.icon,
-        showIcon: false,
-        listTypeAlias: w.listTypeAlias,
-        players: w.players
-            .where((element) =>
-                recognizedListResult.contains(element.name.toLowerCase()))
-            .toList());
+    ResultItemModel w =
+        await ResultItemModel.getNames(constants_firebase.whiteList);
+    w.showIcon = false;
+    w.players = w.players
+        .where((element) =>
+            recognizedListResult.contains(element.name.toLowerCase()))
+        .toList();
 
     List<String> bLower =
         b.players.map((val) => val.name.toLowerCase()).toList();
@@ -78,8 +72,8 @@ class OcrResultWidget extends StatelessWidget {
         icon: const Icon(Icons.touch_app, color: Colors.white),
         showIcon: true,
         players: undefinedListType
-            .map((e) => PlayerModel(
-                '', e, constants_firebase.undefinedList, false, null, null))
+            .map((e) => PlayerModel('', e, constants_firebase.undefinedList,
+                false, null, null, null))
             .toList());
 
     // b.players.sort();
@@ -167,12 +161,15 @@ class OcrResultWidget extends StatelessWidget {
             return Text('Error: ${snapshot.error.toString()}');
           } else {
             return Column(children: const [
-              SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ))
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    )),
+              )
             ]);
           }
         });

@@ -25,10 +25,11 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
   final _name = TextEditingController();
 
   late ResultPageController resultPageController;
-  late List<ChipsModel> initialChipsList = getChipsByListType(playerModel.listType);
+  late List<ChipsModel> initialChipsList =
+      getChipsByListType(playerModel.listType);
 
-  PlayerModel playerModel =
-      PlayerModel('', '', constants_firebase.undefinedList, false, null, null);
+  PlayerModel playerModel = PlayerModel(
+      '', '', constants_firebase.undefinedList, false, null, null, null);
 
   void submitForm() {
     if (_formKey.currentState!.validate()) {
@@ -117,6 +118,7 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
         ResultItemModel.getListTypeByIndex(toggleController.selectedIndex),
         false,
         null,
+        null,
         null);
 
     return Form(
@@ -156,7 +158,8 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
                             initialChipsList
                                 .where((w) => w.isSelected)
                                 .map((m) => m.label)
-                                .toList())
+                                .toList(),
+                            playerModel.createdDate)
                       })),
           Padding(
               padding: const EdgeInsets.all(8),
