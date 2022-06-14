@@ -159,7 +159,8 @@ class Database {
           'OriginalSource': data['OriginalSource'] ?? coolectionPath,
           'Platform ': data['Platform'] ?? defaultTargetPlatform.name,
           'CreatedDate': DateTime.now(),
-          'IndexSearch': GenerateIndexSearch.create(data[constants_firebase.playerName])
+          'IndexSearch':
+              GenerateIndexSearch.create(data[constants_firebase.playerName])
         })
         .then((response) => _firestore
             .collection(coolectionPath)
@@ -169,4 +170,27 @@ class Database {
             .catchError((error2) => throw 'Falha ao transferir:\n $error2'))
         .catchError((error) => throw 'Falha ao adicionar no destino:\n $error');
   }
+
+  ////Database.updateAll(constants_firebase.blackList);
+  // static Future<void> updateAll(String coolectionPath) async {
+  //   List<String> lstNames = [];
+  //   Map<String, dynamic> data;
+
+  //   _firestore.collection(coolectionPath).get().then((querySnapshot) {
+  //     for (var item in querySnapshot.docs) {
+  //       data = item.data();
+
+  //       for (var idx in data['IndexSearch']) {
+  //         lstNames.add(idx);
+  //       }
+
+  //       _firestore.collection(coolectionPath).doc(item.id).update({
+  //         constants_firebase.playerName: lstNames.last,
+  //         'OriginalSource': coolectionPath,
+  //         'CreatedDate': DateTime.now()
+  //         //'IndexSearch': GenerateIndexSearch.create(item.get(constants_firebase.playerName))
+  //       });
+  //     }
+  //   });
+  // }
 }
