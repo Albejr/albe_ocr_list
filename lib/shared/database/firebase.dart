@@ -1,4 +1,5 @@
 import 'package:albe_ocr_list/shared/models/result_item_model.dart';
+import 'package:albe_ocr_list/shared/utils/generate_index_search.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
@@ -34,7 +35,8 @@ class Database {
             false,
             null,
             null,
-            doc.get('CreatedDate')))
+            doc.get('CreatedDate'),
+            null))
         .where((element) => element.name.trim().isNotEmpty)
         .toList();
 
@@ -72,7 +74,8 @@ class Database {
                           'Chips': chips,
                           'OriginalSource': coolectionPath,
                           'Platform ': defaultTargetPlatform.name,
-                          'CreatedDate': DateTime.now()
+                          'CreatedDate': DateTime.now(),
+                          'IndexSearch': GenerateIndexSearch.create(value)
                         })
                         .then((response) => '$value foi adicionado.')
                         .catchError(
@@ -99,7 +102,8 @@ class Database {
                 .doc(id)
                 .set({
                   constants_firebase.playerName: value,
-                  'CreatedDate': DateTime.now()
+                  'CreatedDate': DateTime.now(),
+                  'IndexSearch': GenerateIndexSearch.create(value)
                 })
                 .then((response) => '$value foi modificado.')
                 .catchError((error) => throw 'Falha ao editar:\n $error');
@@ -154,7 +158,8 @@ class Database {
           constants_firebase.playerName: data[constants_firebase.playerName],
           'OriginalSource': data['OriginalSource'] ?? coolectionPath,
           'Platform ': data['Platform'] ?? defaultTargetPlatform.name,
-          'CreatedDate': DateTime.now()
+          'CreatedDate': DateTime.now(),
+          'IndexSearch': GenerateIndexSearch.create(data[constants_firebase.playerName])
         })
         .then((response) => _firestore
             .collection(coolectionPath)

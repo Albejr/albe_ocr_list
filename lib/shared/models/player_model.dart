@@ -9,6 +9,7 @@ class PlayerModel {
   final Color? color;
   final List<String>? chips;
   final Timestamp? createdDate;
+  final List<String>? indexSearch;
 
-  PlayerModel(this.id, this.name, this.listType, this.isMatchText, this.color, this.chips, this.createdDate);
+  PlayerModel(this.id, this.name, this.listType, this.isMatchText, this.color, this.chips, this.createdDate, this.indexSearch);
 }

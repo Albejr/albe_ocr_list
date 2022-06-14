@@ -24,6 +24,8 @@ class ResultListWidget extends StatefulWidget {
 class _ResultListWidgetState extends State<ResultListWidget> {
   late ResultPageController resultPageController;
 
+  late Query searchQuery;
+
   Future<void> _moveItem(
     BuildContext context,
     PlayerModel item,
@@ -84,14 +86,32 @@ class _ResultListWidgetState extends State<ResultListWidget> {
     });
   }
 
+  void getSearchQuery(String value) {
+    //orderBy is compulsory to enable pagination
+    Query q = (value.isNotEmpty)
+        ? FirebaseFirestore.instance
+            .collection(widget.listType)
+            .orderBy(constants_firebase.playerName)
+            .where("indexSearch", arrayContains: value.toLowerCase().trim())
+        : FirebaseFirestore.instance
+            .collection(widget.listType)
+            .orderBy(constants_firebase.playerName);
+
+    setState(() {
+      searchQuery = q;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    getSearchQuery("");
   }
 
   @override
   Widget build(BuildContext context) {
     resultPageController = context.watch<ResultPageController>();
+
     return resultPageController.isProcessing
         ? Column(children: const [
             Padding(
@@ -104,8 +124,38 @@ class _ResultListWidgetState extends State<ResultListWidget> {
                   )),
             )
           ])
-        : Scrollbar(
-            child: PaginateFirestore(
+        : Column(children: [
+            Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextField(
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                    cursorColor: Colors.white,
+                    decoration: const InputDecoration(
+                      labelText: 'Pesquisar',
+                      labelStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w200),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                    ),
+                    maxLength: 40,
+                    onChanged: (newValue) => getSearchQuery(newValue))),
+            Expanded(
+                child: Scrollbar(
+                    child: PaginateFirestore(
+              key: UniqueKey(),
               itemBuilderType: PaginateBuilderType.listView,
               itemBuilder: (context, documentSnapshots, index) {
                 final data = documentSnapshots[index].data() as Map?;
@@ -117,7 +167,8 @@ class _ResultListWidgetState extends State<ResultListWidget> {
                     false,
                     null,
                     null,
-                    data['CreatedDate']);
+                    data['CreatedDate'],
+                    null);
 
                 ResultItemModel resultItemModel =
                     ResultItemModel.getTile(widget.listType);
@@ -193,13 +244,14 @@ class _ResultListWidgetState extends State<ResultListWidget> {
                       }),
                 );
               },
-              query: FirebaseFirestore.instance
-                  .collection(widget.listType)
-                  .orderBy(constants_firebase.playerName),
+              query: searchQuery,
               itemsPerPage: 15,
               isLive: true,
-            ),
-          );
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              onEmpty: const Center(child: Text('Nenhum registro')),
+            )))
+          ]);
   }
 
   @override

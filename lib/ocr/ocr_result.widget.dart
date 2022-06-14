@@ -73,7 +73,7 @@ class OcrResultWidget extends StatelessWidget {
         showIcon: true,
         players: undefinedListType
             .map((e) => PlayerModel('', e, constants_firebase.undefinedList,
-                false, null, null, null))
+                false, null, null, null, null))
             .toList());
 
     // b.players.sort();

@@ -29,7 +29,7 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
       getChipsByListType(playerModel.listType);
 
   PlayerModel playerModel = PlayerModel(
-      '', '', constants_firebase.undefinedList, false, null, null, null);
+      '', '', constants_firebase.undefinedList, false, null, null, null, null);
 
   void submitForm() {
     if (_formKey.currentState!.validate()) {
@@ -119,6 +119,7 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
         false,
         null,
         null,
+        null,
         null);
 
     return Form(
@@ -159,7 +160,8 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
                                 .where((w) => w.isSelected)
                                 .map((m) => m.label)
                                 .toList(),
-                            playerModel.createdDate)
+                            playerModel.createdDate,
+                            null)
                       })),
           Padding(
               padding: const EdgeInsets.all(8),

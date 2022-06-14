@@ -26,7 +26,7 @@ class _PlayerEditFormWidgetState extends State<PlayerEditFormWidget> {
   late ResultPageController resultPageController;
 
   PlayerModel playerModel = PlayerModel(
-      '', '', constants_firebase.undefinedList, false, null, null, null);
+      '', '', constants_firebase.undefinedList, false, null, null, null, null);
 
   void submitForm() {
     if (_formKey.currentState!.validate()) {
@@ -70,6 +70,7 @@ class _PlayerEditFormWidgetState extends State<PlayerEditFormWidget> {
         false,
         null,
         null,
+        null,
         null);
 
     return Form(
@@ -107,7 +108,8 @@ class _PlayerEditFormWidgetState extends State<PlayerEditFormWidget> {
                             false,
                             null,
                             null,
-                            playerModel.createdDate)
+                            playerModel.createdDate,
+                            null)
                       })),
           Padding(
               padding: const EdgeInsets.all(8),
