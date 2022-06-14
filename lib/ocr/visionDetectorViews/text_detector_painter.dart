@@ -81,13 +81,13 @@ class TextDetectorPainter extends CustomPainter {
   PlayerModel getPlayerModelByText(String textVal) {
     if (blackList.any((element) => isMatchCustom(element, textVal))) {
       return PlayerModel('', textVal, constants_firebase.blackList, true,
-          Colors.red, null, null, null);
+          Colors.red, null, null);
     } else if (whiteList.any((element) => isMatchCustom(element, textVal))) {
       return PlayerModel('', textVal, constants_firebase.whiteList, true,
-          Colors.green, null, null, null);
+          Colors.green, null, null);
     } else {
       return PlayerModel('', textVal, constants_firebase.undefinedList, false,
-          Colors.transparent, null, null, null);
+          Colors.transparent, null, null);
     }
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '/shared/models/chips_model.dart';
 import '/result/result_page.controller.dart';
 import '/shared/database/firebase.dart';
 import '/shared/models/result_item_model.dart';
@@ -25,19 +24,15 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
   final _name = TextEditingController();
 
   late ResultPageController resultPageController;
-  late List<ChipsModel> initialChipsList =
-      getChipsByListType(playerModel.listType);
 
   PlayerModel playerModel = PlayerModel(
-      '', '', constants_firebase.undefinedList, false, null, null, null, null);
+      '', '', constants_firebase.undefinedList, false, null, null, null);
 
   void submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState?.save();
 
-      Database.addItem(
-              playerModel.listType, playerModel.name, playerModel.chips)
-          .then((value) {
+      Database.addItem(playerModel.listType, playerModel.name).then((value) {
         _formKey.currentState?.reset();
 
         resultPageController.setSelectedTabIndex(
@@ -55,47 +50,6 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
           backgroundColor: Colors.deepOrange,
           content: Text('Formulário inválido.')));
     }
-  }
-
-  static List<ChipsModel> getChipsByListType(String listType) {
-    switch (listType) {
-      case constants_firebase.blackList:
-        return [];
-      case constants_firebase.whiteList:
-        return [ChipsModel("Iniciante", false), ChipsModel("Esconde", false)];
-      default:
-        return [];
-    }
-  }
-
-  List<Widget> buildChips() {
-    List<Widget> chips = [];
-    for (int i = 0; i < initialChipsList.length; i++) {
-      Widget item = Padding(
-        padding: const EdgeInsets.only(left: 10, right: 5),
-        child: InputChip(
-          label: Text(initialChipsList[i].label),
-          elevation: 5.0,
-          showCheckmark: false,
-          disabledColor: Colors.grey,
-          selectedColor: Colors.amber,
-          selected: initialChipsList[i].isSelected,
-          onSelected: (bool value) {
-            setState(() {
-              initialChipsList[i].isSelected = value;
-            });
-          },
-          // onPressed: () {
-          // setState(() {
-          //   var isSelected = initialChipsList[i].isSelected;
-          //   initialChipsList[i].isSelected = !isSelected;
-          // });
-          // },
-        ),
-      );
-      chips.add(item);
-    }
-    return chips;
   }
 
   @override
@@ -117,7 +71,6 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
         _name.text,
         ResultItemModel.getListTypeByIndex(toggleController.selectedIndex),
         false,
-        null,
         null,
         null,
         null);
@@ -156,19 +109,9 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
                             playerModel.listType,
                             false,
                             null,
-                            initialChipsList
-                                .where((w) => w.isSelected)
-                                .map((m) => m.label)
-                                .toList(),
                             playerModel.createdDate,
                             null)
                       })),
-          Padding(
-              padding: const EdgeInsets.all(8),
-              child: Wrap(
-                direction: Axis.horizontal,
-                children: buildChips(),
-              )),
           Padding(
               padding: const EdgeInsets.all(8),
               child: SizedBox(

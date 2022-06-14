@@ -166,7 +166,6 @@ class _ResultListWidgetState extends State<ResultListWidget> {
                     widget.listType,
                     false,
                     null,
-                    null,
                     data['CreatedDate'],
                     null);
 
