@@ -8,7 +8,7 @@ import '/shared/constants/firebase_names.dart' as constants_firebase;
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-class Database {
+class DatabaseFirebaseFirestore {
   // the stream that provides all our data from the firestore database with real time changes
   static Stream<QuerySnapshot> get allBlackList => _firestore
       .collection(constants_firebase.blackList)
@@ -167,27 +167,4 @@ class Database {
             .catchError((error2) => throw 'Falha ao transferir:\n $error2'))
         .catchError((error) => throw 'Falha ao adicionar no destino:\n $error');
   }
-
-  ////Database.updateAll(constants_firebase.blackList);
-  // static Future<void> updateAll(String coolectionPath) async {
-  //   List<String> lstNames = [];
-  //   Map<String, dynamic> data;
-
-  //   _firestore.collection(coolectionPath).get().then((querySnapshot) {
-  //     for (var item in querySnapshot.docs) {
-  //       data = item.data();
-
-  //       for (var idx in data['IndexSearch']) {
-  //         lstNames.add(idx);
-  //       }
-
-  //       _firestore.collection(coolectionPath).doc(item.id).update({
-  //         constants_firebase.playerName: lstNames.last,
-  //         'OriginalSource': coolectionPath,
-  //         'CreatedDate': DateTime.now()
-  //         //'IndexSearch': GenerateIndexSearch.create(item.get(constants_firebase.playerName))
-  //       });
-  //     }
-  //   });
-  // }
 }

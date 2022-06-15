@@ -25,7 +25,7 @@ class _ResultPageWidgetState extends State<ResultPageWidget>
       Padding(
           padding: const EdgeInsets.only(top: 5),
           child: StreamBuilder<QuerySnapshot>(
-              stream: Database
+              stream: DatabaseFirebaseFirestore
                   .allBlackList, // a previously-obtained Future<String> or null
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -42,7 +42,7 @@ class _ResultPageWidgetState extends State<ResultPageWidget>
       Padding(
           padding: const EdgeInsets.only(top: 5),
           child: StreamBuilder<QuerySnapshot>(
-              stream: Database
+              stream: DatabaseFirebaseFirestore
                   .allWhiteList, // a previously-obtained Future<String> or null
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {

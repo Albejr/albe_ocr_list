@@ -32,7 +32,8 @@ class _PlayerEditFormWidgetState extends State<PlayerEditFormWidget> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState?.save();
 
-      Database.editItem(playerModel.listType, playerModel.id, playerModel.name)
+      DatabaseFirebaseFirestore.editItem(
+              playerModel.listType, playerModel.id, playerModel.name)
           .then((value) {
         _formKey.currentState?.reset();
 

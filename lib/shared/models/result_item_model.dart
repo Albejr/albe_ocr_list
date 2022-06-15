@@ -42,7 +42,7 @@ class ResultItemModel {
         color: color,
         showIcon: true,
         icon: icon,
-        players: await Database.getItems(collectionPath));
+        players: await DatabaseFirebaseFirestore.getItems(collectionPath));
   }
 
   static ResultItemModel getTile(String collectionPath) {

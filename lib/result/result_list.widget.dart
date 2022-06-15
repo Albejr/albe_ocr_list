@@ -31,7 +31,8 @@ class _ResultListWidgetState extends State<ResultListWidget> {
     PlayerModel item,
   ) {
     resultPageController.setIsProcessing(true);
-    return Database.moveItem(item.listType, item.id).then((value) {
+    return DatabaseFirebaseFirestore.moveItem(item.listType, item.id)
+        .then((value) {
       resultPageController.setSelectedTabIndex(
           ResultItemModel.getIndexByListType(
               ResultItemModel.getInvertedByListType(item.listType)));
@@ -72,7 +73,8 @@ class _ResultListWidgetState extends State<ResultListWidget> {
 
   Future<void> _deleteItem(BuildContext context, PlayerModel item) {
     resultPageController.setIsProcessing(true);
-    return Database.deleteItem(item.listType, item.id).then((value) {
+    return DatabaseFirebaseFirestore.deleteItem(item.listType, item.id)
+        .then((value) {
       resultPageController.setSelectedTabIndex(
           ResultItemModel.getIndexByListType(item.listType));
       ScaffoldMessenger.of(context).showSnackBar(

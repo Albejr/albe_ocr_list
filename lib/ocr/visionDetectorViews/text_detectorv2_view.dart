@@ -29,9 +29,9 @@ class _TextDetectorViewV2State extends State<TextDetectorV2View> {
 
   @override
   void initState() {
-    Database.getItems(constants_firebase.blackList)
+    DatabaseFirebaseFirestore.getItems(constants_firebase.blackList)
         .then((value) => blackList = value.map((e) => e.name).toList());
-    Database.getItems(constants_firebase.whiteList)
+    DatabaseFirebaseFirestore.getItems(constants_firebase.whiteList)
         .then((value) => whiteList = value.map((e) => e.name).toList());
 
     super.initState();

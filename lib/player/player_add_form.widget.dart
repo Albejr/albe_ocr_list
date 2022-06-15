@@ -32,7 +32,8 @@ class _PlayerAddFormWidgetState extends State<PlayerAddFormWidget> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState?.save();
 
-      Database.addItem(playerModel.listType, playerModel.name).then((value) {
+      DatabaseFirebaseFirestore.addItem(playerModel.listType, playerModel.name)
+          .then((value) {
         _formKey.currentState?.reset();
 
         resultPageController.setSelectedTabIndex(
