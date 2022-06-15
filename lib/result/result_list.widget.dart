@@ -89,12 +89,19 @@ class _ResultListWidgetState extends State<ResultListWidget> {
   }
 
   void getSearchQuery(String value) {
+    FirebaseFirestore.instance
+        .collection(widget.listType)
+        .orderBy(constants_firebase.playerName)
+        .where(constants_firebase.indexSearch, arrayContains: value.toLowerCase().trim())
+        .get()
+        .then((result) => debugPrint(result.docs.join("|")));
+
     //orderBy is compulsory to enable pagination
     Query q = (value.isNotEmpty)
         ? FirebaseFirestore.instance
             .collection(widget.listType)
             .orderBy(constants_firebase.playerName)
-            .where("indexSearch", arrayContains: value.toLowerCase().trim())
+            .where(constants_firebase.indexSearch, arrayContains: value.toLowerCase().trim())
         : FirebaseFirestore.instance
             .collection(widget.listType)
             .orderBy(constants_firebase.playerName);

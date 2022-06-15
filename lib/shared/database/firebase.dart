@@ -72,7 +72,7 @@ class DatabaseFirebaseFirestore {
                           'OriginalSource': coolectionPath,
                           'Platform ': defaultTargetPlatform.name,
                           'CreatedDate': DateTime.now(),
-                          'IndexSearch': GenerateIndexSearch.create(value)
+                          constants_firebase.indexSearch: GenerateIndexSearch.create(value)
                         })
                         .then((response) => '$value foi adicionado.')
                         .catchError(
@@ -100,7 +100,7 @@ class DatabaseFirebaseFirestore {
                 .set({
                   constants_firebase.playerName: value,
                   'CreatedDate': DateTime.now(),
-                  'IndexSearch': GenerateIndexSearch.create(value)
+                  constants_firebase.indexSearch: GenerateIndexSearch.create(value)
                 })
                 .then((response) => '$value foi modificado.')
                 .catchError((error) => throw 'Falha ao editar:\n $error');
@@ -156,7 +156,7 @@ class DatabaseFirebaseFirestore {
           'OriginalSource': data['OriginalSource'] ?? coolectionPath,
           'Platform ': data['Platform'] ?? defaultTargetPlatform.name,
           'CreatedDate': DateTime.now(),
-          'IndexSearch':
+          constants_firebase.indexSearch:
               GenerateIndexSearch.create(data[constants_firebase.playerName])
         })
         .then((response) => _firestore

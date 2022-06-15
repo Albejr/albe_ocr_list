@@ -25,7 +25,7 @@ class DatabaseFirebaseFirestoreMigrate {
         _firestore
             .collection(coolectionPath)
             .doc(item.id)
-            .update({'IndexSearch': GenerateIndexSearch.create(name)});
+            .update({constants_firebase.indexSearch: GenerateIndexSearch.create(name)});
       }
     });
   }
@@ -42,9 +42,9 @@ class DatabaseFirebaseFirestoreMigrate {
         idxItem++;
         Map<String, dynamic> data = item.data();
 
-        if (data['IndexSearch'] != null) {
+        if (data[constants_firebase.indexSearch] != null) {
           List<String> lstNames = [];
-          for (var idx in data['IndexSearch']) {
+          for (var idx in data[constants_firebase.indexSearch]) {
             lstNames.add(idx);
           }
 
