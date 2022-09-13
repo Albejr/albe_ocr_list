@@ -1,5 +1,5 @@
-# Albe OCR Players <sup>2.0.2</sup>
-OCR to identify players in specific lists.
+<h1 align="center"><i>Albe OCR Players <sup>2.0.2</sup></i></h1>
+<p align="center"><i>OCR to identify players in specific lists.</i></p>
 
 ## Installation
 
