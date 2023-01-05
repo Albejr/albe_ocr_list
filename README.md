@@ -4,9 +4,6 @@
 ## Installation
 https://play.google.com/store/apps/details?id=br.eti.albertino.dual_be
 
-### Download APK
-https://github.com/Albejr/albe_ocr_aoe/blob/main/build/app/outputs/flutter-apk/app.apk
-
 ## Sample
 <img src="https://user-images.githubusercontent.com/24717256/160204045-05596620-2886-4635-a13c-0af856826db5.jpg" width="250" height="500">
 
