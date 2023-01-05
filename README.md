@@ -2,6 +2,7 @@
 <p align="center"><i>OCR to identify players in specific lists.</i></p>
 
 ## Installation
+https://play.google.com/store/apps/details?id=br.eti.albertino.dual_be
 
 ### Download APK
 https://github.com/Albejr/albe_ocr_aoe/blob/main/build/app/outputs/flutter-apk/app.apk
